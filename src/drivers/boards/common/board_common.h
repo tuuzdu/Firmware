@@ -384,7 +384,7 @@ typedef enum PX4_SOC_ARCH_ID_t {
 #define PX4_GUID_FORMAT_SIZE              ((2*PX4_GUID_BYTE_LENGTH)+1)
 
 /* DEPRICATED as of 1.7.0 A type suitable for defining the 8 bit format of the CPU UUID */
-typedef uint8_t uuid_byte_t[PX4_CPU_UUID_BYTE_LENGTH];
+typedef uint8_t uuid_byte_t[PX4_CPU_UUID_BYTE_LENGTH] __attribute__((aligned(sizeof(uint32_t))));
 
 /* DEPRICATED as of 1.7.0  A type suitable for defining the 32bit format of the CPU UUID */
 typedef uint32_t uuid_uint32_t[PX4_CPU_UUID_WORD32_LENGTH];
@@ -392,13 +392,13 @@ typedef uint32_t uuid_uint32_t[PX4_CPU_UUID_WORD32_LENGTH];
 /* A type suitable for defining the 8 bit format of the MFG UID
  * This is always returned as MSD @ index 0 -LSD @ index PX4_CPU_MFGUID_BYTE_LENGTH-1
  */
-typedef uint8_t mfguid_t[PX4_CPU_MFGUID_BYTE_LENGTH];
+typedef uint8_t mfguid_t[PX4_CPU_MFGUID_BYTE_LENGTH] __attribute__((aligned(sizeof(uint32_t))));
 
 /* A type suitable for defining the 8 bit format of the px4 globally unique
  * PX4 GUID. This is always returned as MSD @ index 0 -LSD @ index
  * PX4_CPU_GUID_BYTE_LENGTH-1
  */
-typedef uint8_t px4_guid_t[PX4_GUID_BYTE_LENGTH];
+typedef uint8_t px4_guid_t[PX4_GUID_BYTE_LENGTH] __attribute__((aligned(sizeof(uint32_t))));
 
 /************************************************************************************
  * Private Functions
