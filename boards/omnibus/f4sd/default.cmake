@@ -28,9 +28,10 @@ px4_add_board(
 		#lights/blinkm
 		lights/rgbled
 		#magnetometer # all available magnetometer drivers
-		magnetometer/hmc5883
+		#magnetometer/hmc5883
+		magnetometer/lsm303agr
 		#mkblctrl
-		optical_flow/px4flow
+		#optical_flow/px4flow
 		#pca9685
 		#pwm_input
 		#pwm_out_sim
@@ -38,9 +39,9 @@ px4_add_board(
 		rc_input
 		#tap_esc
 		#telemetry # all available telemetry drivers
-		telemetry/frsky_telemetry
+		#telemetry/frsky_telemetry
 		#test_ppm
-		osd
+		#osd
 
 	MODULES
 		attitude_estimator_q

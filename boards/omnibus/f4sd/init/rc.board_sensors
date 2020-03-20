@@ -10,8 +10,11 @@ then
 fi
 
 # Possible external compasses
-hmc5883 -X start
+# hmc5883 -X start
+lsm303agr start
 
 bmp280 start
 
 adc start
+
+gps start -d /dev/ttyS2	-p ubx
