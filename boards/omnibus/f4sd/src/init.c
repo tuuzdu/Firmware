@@ -331,6 +331,8 @@ __EXPORT int board_app_initialize(uintptr_t arg)
 	SPI_SETBITS(spi3, 8);
 	SPI_SETMODE(spi3, SPIDEV_MODE3);
 	SPI_SELECT(spi3, PX4_SPIDEV_BARO, false);
+	SPI_SELECT(spi3, PX4_SPIDEV_LSM303A_M, false);
+	SPI_SELECT(spi3, PX4_SPIDEV_LSM303A_X, false);
 	up_udelay(20);
 
 #if defined(FLASH_BASED_PARAMS)

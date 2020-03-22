@@ -111,7 +111,7 @@
 /*----------------------------------------------------------*/
 /*         OMNIBUSF4SD SPI chip selects and DRDY            */
 /*----------------------------------------------------------*/
-
+#include <drivers/drv_sensor.h>
 /* SPI chip selects */
 /*
  * Define the Chip Selects for SPI1
@@ -139,6 +139,8 @@
 
 #define GPIO_SPI3_CS_BARO          (GPIO_OUTPUT|GPIO_PUSHPULL|GPIO_SPEED_2MHz|GPIO_OUTPUT_SET|GPIO_PORTB|GPIO_PIN3)
 #define GPIO_SPI3_CS_OSD           (GPIO_OUTPUT|GPIO_PUSHPULL|GPIO_SPEED_2MHz|GPIO_OUTPUT_SET|GPIO_PORTA|GPIO_PIN15)
+#define GPIO_SPI3_CS_LSM303A_M           (GPIO_OUTPUT|GPIO_PUSHPULL|GPIO_SPEED_2MHz|GPIO_OUTPUT_SET|GPIO_PORTB|GPIO_PIN6)
+#define GPIO_SPI3_CS_LSM303A_X           (GPIO_OUTPUT|GPIO_PUSHPULL|GPIO_SPEED_2MHz|GPIO_OUTPUT_SET|GPIO_PORTB|GPIO_PIN11)
 
 /*
  *  Define the ability to shut off off the sensor signals
@@ -168,14 +170,20 @@
 /* SPI 3 CS's  off */
 #define GPIO_SPI3_CS_BARO_OFF        _PIN_OFF(GPIO_SPI3_CS_BARO)
 #define GPIO_SPI3_CS_OSD_OFF        _PIN_OFF(GPIO_SPI3_CS_OSD)
+#define GPIO_SPI3_CS_LSM303A_M_OFF        _PIN_OFF(GPIO_SPI3_CS_LSM303A_M)
+#define GPIO_SPI3_CS_LSM303A_X_OFF        _PIN_OFF(GPIO_SPI3_CS_LSM303A_X)
 
 // One device per bus
 #define PX4_SPI_BUS_SENSORS         1
 #define PX4_SPIDEV_MPU              1
 #define PX4_SPIDEV_ICM_20602        1
 #define PX4_SPIDEV_BARO_BUS         3
-#define PX4_SPIDEV_BARO             1
-#define PX4_SPIDEV_OSD              2
+#define PX4_SPIDEV_BARO             PX4_MK_SPI_SEL(0, DRV_BARO_DEVTYPE_BMP280)
+// #define PX4_SPIDEV_OSD              2
+
+#define PX4_SPIDEV_LSM303A_M       PX4_MK_SPI_SEL(0, DRV_MAG_DEVTYPE_LSM303AGR)
+#define PX4_SPIDEV_LSM303A_X       PX4_MK_SPI_SEL(0, DRV_ACC_DEVTYPE_LSM303AGR)
+// #define PX4_SENSOR5_BUS_CS_GPIO    {GPIO_SPI3_CS_LSM303A_M, GPIO_SPI3_CS3_LSM303A_X}
 
 /* USB OTG FS
  *
@@ -188,7 +196,10 @@
 /*----------------------------------------------------------*/
 
 #define PX4_SPI_BUS_BARO         3
-#define PX4_SPI_BUS_OSD			 3
+// #define PX4_SPI_BUS_OSD			 3
+#define PX4_SPI_BUS_SENSOR5  3
+// #define PX4_SPI_BUS_LSM303A_M	3
+// #define PX4_SPI_BUS_LSM303A_X	3
 
 #define PX4_I2C_BUS_EXPANSION    2
 #define PX4_I2C_BUS_LED          PX4_I2C_BUS_EXPANSION
