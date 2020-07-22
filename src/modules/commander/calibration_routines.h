@@ -32,7 +32,7 @@
  ****************************************************************************/
 
 /// @file calibration_routines.h
-///	@authot Don Gagne <don@thegagnes.com>
+///	@author Don Gagne <don@thegagnes.com>
 
 #pragma once
 
@@ -58,22 +58,19 @@ int sphere_fit_least_squares(const float x[], const float y[], const float z[],
 			     unsigned int size, unsigned int max_iterations, float delta, float *sphere_x, float *sphere_y, float *sphere_z,
 			     float *sphere_radius);
 int ellipsoid_fit_least_squares(const float x[], const float y[], const float z[],
-				unsigned int size, unsigned int max_iterations, float delta, float *offset_x, float *offset_y, float *offset_z,
+				unsigned int size, int max_iterations, float *offset_x, float *offset_y, float *offset_z,
 				float *sphere_radius, float *diag_x, float *diag_y, float *diag_z, float *offdiag_x, float *offdiag_y,
-				float *offdiag_z);
+				float *offdiag_z, bool sphere_fit_only);
 int run_lm_sphere_fit(const float x[], const float y[], const float z[], float &_fitness, float &_sphere_lambda,
 		      unsigned int size, float *offset_x, float *offset_y, float *offset_z,
 		      float *sphere_radius, float *diag_x, float *diag_y, float *diag_z, float *offdiag_x, float *offdiag_y,
 		      float *offdiag_z);
 int run_lm_ellipsoid_fit(const float x[], const float y[], const float z[], float &_fitness, float &_sphere_lambda,
-		      unsigned int size, float *offset_x, float *offset_y, float *offset_z,
-		      float *sphere_radius, float *diag_x, float *diag_y, float *diag_z, float *offdiag_x, float *offdiag_y,
-		      float *offdiag_z);
+			 unsigned int size, float *offset_x, float *offset_y, float *offset_z,
+			 float *sphere_radius, float *diag_x, float *diag_y, float *diag_z, float *offdiag_x, float *offdiag_y,
+			 float *offdiag_z);
 bool inverse4x4(float m[], float invOut[]);
-bool mat_inverse(float* A, float* inv, uint8_t n);
-
-// FIXME: Change the name
-static const unsigned max_accel_sens = 3;
+bool mat_inverse(float *A, float *inv, uint8_t n);
 
 // The order of these cannot change since the calibration calculations depend on them in this order
 enum detect_orientation_return {
@@ -92,7 +89,6 @@ static const unsigned detect_orientation_side_count = 6;
 ///		and ready for measurements
 enum detect_orientation_return detect_orientation(orb_advert_t *mavlink_log_pub,	///< uORB handle to write output to
 		int	cancel_sub,			///< Cancel subscription from calibration_cancel_subscribe
-		int	accel_sub,			///< Orb subcription to accel sensor
 		bool	lenient_still_detection);	///< true: Use more lenient still position detection
 
 /// Returns the human readable string representation of the orientation
@@ -139,18 +135,18 @@ bool calibrate_cancel_check(orb_advert_t *mavlink_log_pub,	///< uORB handle to w
 
 #define calibration_log_info(_pub, _text, ...)			\
 	do { \
-		mavlink_and_console_log_info(_pub, _text, ##__VA_ARGS__); \
-		usleep(10000); \
+		mavlink_log_info(_pub, _text, ##__VA_ARGS__); \
+		px4_usleep(10000); \
 	} while(0);
 
 #define calibration_log_critical(_pub, _text, ...)			\
 	do { \
 		mavlink_log_critical(_pub, _text, ##__VA_ARGS__); \
-		usleep(10000); \
+		px4_usleep(10000); \
 	} while(0);
 
 #define calibration_log_emergency(_pub, _text, ...)			\
 	do { \
 		mavlink_log_emergency(_pub, _text, ##__VA_ARGS__); \
-		usleep(10000); \
+		px4_usleep(10000); \
 	} while(0);
